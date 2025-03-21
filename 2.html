@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Funcionalidades - UMG Sistema Educativo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #007AFF;
+            --secondary-color: #5856D6;
+            --tertiary-color: #14B8A6;
+            --danger-color: #FF3B30;
+            --success-color: #34C759;
+            --warning-color: #FF9500;
+            --info-color: #5AC8FA;
+            --violet-color: #AF52DE;
+            --background-color: #F2F2F7;
+            --card-color: #FFFFFF;
+            --text-primary: #000000;
+            --text-secondary: #8E8E93;
+            --border-color: #E5E5EA;
+            --dynamic-island-color: #000000;
+            --header-height: 95px;
+            --tab-bar-height: 90px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background-color: #1e1e1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .phone-container {
+            width: 430px;
+            height: 932px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 55px;
+            background-color: var(--background-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 14px solid #000000;
+        }
+        
+        /* Dynamic Island */
+        .dynamic-island {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background-color: var(--dynamic-island-color);
+            border-radius: 24px;
+            z-index: 1000;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            height: 48px;
+            padding: 14px 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 16px;
+            font-weight: 600;
+            position: relative;
+            z-index: 100;
+        }
+        
+        .status-icons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .status-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #000;
+            border-radius: 50%;
+        }
+        
+        .header {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            background-color: var(--background-color);
+            z-index: 100;
+            padding-top: 8px;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .page-title {
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .action-button {
+            color: var(--primary-color);
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .screen-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 90px; /* Adjust for tab bar */
+            height: calc(100% - 90px - 48px);
+            overflow-y: auto;
+        }
+        
+        .welcome-card {
+            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            border-radius: 20px;
+            padding: 22px;
+            margin: 16px 16px 22px;
+            color: white;
+        }
+        
+        .welcome-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        
+        .welcome-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+        
+        .stat-item {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+            flex: 1;
+            margin: 0 4px;
+        }
+        
+        .stat-value {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+        
+        .section-header {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 24px 16px 14px;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 0 16px;
+        }
+        
+        .grid-item {
+            background-color: var(--card-color);
+            border-radius: 18px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1 / 1;
+        }
+        
+        .grid-item:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .item-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .item-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .item-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .quick-access {
+            margin: 22px 16px;
+        }
+        
+        .quick-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 14px;
+            padding: 4px 0;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .quick-scroll::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .quick-item {
+            background-color: var(--card-color);
+            border-radius: 16px;
+            padding: 16px;
+            min-width: 140px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+        
+        .quick-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: white;
+        }
+        
+        .quick-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .quick-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        
+        .tab-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--tab-bar-height);
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            border-top: 1px solid var(--border-color);
+            z-index: 200;
+        }
+        
+        .tab-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+            padding-top: 10px;
+            cursor: pointer;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-icon {
+            height: 28px;
+            width: 28px;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 36px;
+            font-size: 17px;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        
+        .toast.visible {
+            opacity: 1;
+        }
+        
+        /* Responsive */
+        @media (max-width: 430px) {
+            .phone-container {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                border: none;
+            }
+            
+            .dynamic-island {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <!-- Dynamic Island -->
+        <div class="dynamic-island"></div>
+        
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="time">9:41</div>
+            <div class="status-icons">
+                <div class="status-icon"></div>
+                <div class="status-icon"></div>
+                <div class="status-icon"></div>
+            </div>
+        </div>
+        
+        <!-- Toast for notifications -->
+        <div id="toast" class="toast"></div>
+        
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="page-title">Sistema de control de asistencia UMG</div>
+                <div class="action-button" onclick="showToast('Notificaciones')">🔔</div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="screen-content">
+            <!-- Welcome Card -->
+            <div class="welcome-card">
+                <div class="welcome-title">Bienvenido, Jairon</div>
+                <div class="welcome-subtitle">Ing. en Sistemas - Campus Escuintla</div>
+                
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Cursos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">Pendientes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">90%</div>
+                        <div class="stat-label">Asistencia</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Functions -->
+            <div class="section-header">Funciones Principales</div>
+            
+            <div class="grid-container">
+                <div class="grid-item" onclick="showToast('Accediendo a Cursos')">
+                    <div class="item-icon" style="background-color: var(--primary-color);">📚</div>
+                    <a href="3.html" class="item-title">Mis Cursos</a>
+
+                    <div class="item-subtitle">3 cursos activos</div>
+                </div>
+                
+                <div class="grid-item" onclick="showToast('Accediendo a Horario')">
+                    <div class="item-icon" style="background-color: var(--info-color);">🗓️</div>
+                    <div class="item-title">Horario</div>
+                    <div class="item-subtitle">Semana actual</div>
+                </div>
+                
+                <div class="grid-item" onclick="showToast('Accediendo a Asignaciones')">
+                    <div class="item-icon" style="background-color: var(--violet-color);">📝</div>
+                    <div class="item-title">Asignaciones</div>
+                    <div class="item-subtitle">2 pendientes</div>
+                </div>
+                
+               
+            </div>
+            
+            <div class="section-header">Acceso Rápido</div>
+            
+            <div class="quick-access">
+                <div class="quick-scroll">
+                    <div class="quick-item" onclick="showToast('Accediendo a Inscripciones')">
+                        <div class="quick-icon" style="background-color: var(--warning-color);">🔖</div>
+                        <div class="quick-title">Inscripciones</div>
+                        <div class="quick-subtitle">Próximo semestre</div>
+                    </div>
+                    
+                    <div class="quick-item" onclick="showToast('Accediendo a Profesores')">
+                        <div class="quick-icon" style="background-color: var(--secondary-color);">👨‍🏫</div>
+                        <div class="quick-title">Profesores</div>
+                        <div class="quick-subtitle">Directorio</div>
+                    </div>
+                    
+                    <div class="quick-item" onclick="showToast('Accediendo a Biblioteca')">
+                        <div class="quick-icon" style="background-color: var(--tertiary-color);">📖</div>
+                        <div class="quick-title">Biblioteca</div>
+                        <div class="quick-subtitle">Recursos</div>
+                    </div>
+                    
+                    <div class="quick-item" onclick="showToast('Accediendo a Eventos')">
+                        <div class="quick-icon" style="background-color: var(--danger-color);">🎪</div>
+                        <div class="quick-title">Eventos</div>
+                        <div class="quick-subtitle">Próximas actividades</div>
+                    </div>
+                </div>
+            </div>
+            
+           
+        
+        <!-- Tab Bar -->
+        <div class="tab-bar">
+            <div class="tab-item active">
+                <div class="tab-icon">🏠</div>
+                <div>Inicio</div>
+            </div>
+            <div class="tab-item" onclick="showToast('Accediendo a Cursos')">
+                <div class="tab-icon">📚</div>
+                <div>Cursos</div>
+            </div>
+            <div class="tab-item" onclick="showToast('Accediendo a Comunicación')">
+                <div class="tab-icon">💬</div>
+                <div>Mensajes</div>
+            </div>
+            <div class="tab-item" onclick="showToast('Accediendo a Perfil')">
+                <div class="tab-icon">👤</div>
+                <div>Perfil</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para mostrar toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('visible');
+            
+            // Ocultar toast después de 2 segundos
+            setTimeout(() => {
+                toast.classList.remove('visible');
+            }, 2000);
+        }
+        
+        // Actualizar hora actual
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const timeString = ${hours}:${minutes};
+            
+            document.querySelector('.time').textContent = timeString;
+        }
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            // Actualizar reloj cada minuto
+            updateClock();
+            setInterval(updateClock, 60000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Curso con Registro de Asistencia - UMG Sistema Educativo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #007AFF;
+            --primary-dark: #0062C8;
+            --secondary-color: #5856D6;
+            --tertiary-color: #14B8A6;
+            --danger-color: #FF3B30;
+            --success-color: #34C759;
+            --warning-color: #FF9500;
+            --info-color: #5AC8FA;
+            --violet-color: #AF52DE;
+            --background-color: #F2F2F7;
+            --card-color: #FFFFFF;
+            --text-primary: #000000;
+            --text-secondary: #8E8E93;
+            --border-color: #E5E5EA;
+            --dynamic-island-color: #000000;
+            --header-height: 95px;
+            --tab-bar-height: 90px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background-color: #1e1e1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .phone-container {
+            width: 430px;
+            height: 932px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 55px;
+            background-color: var(--background-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 14px solid #000000;
+        }
+        
+        /* Dynamic Island */
+        .dynamic-island {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background-color: var(--dynamic-island-color);
+            border-radius: 24px;
+            z-index: 1000;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            height: 48px;
+            padding: 14px 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 16px;
+            font-weight: 600;
+            position: relative;
+            z-index: 100;
+        }
+        
+        .status-icons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .status-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #000;
+            border-radius: 50%;
+        }
+        
+        /* Course Header */
+        .course-header {
+            background-color: var(--secondary-color);
+            padding: 24px 20px;
+            color: white;
+            position: relative;
+        }
+        
+        .course-back {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .course-menu {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .course-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 16px 0 8px;
+        }
+        
+        .course-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .course-dot {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            border-radius: 2px;
+            background-color: white;
+            margin: 0 8px;
+        }
+        
+        .course-stats {
+            display: flex;
+            margin-top: 16px;
+        }
+        
+        .course-stat {
+            flex: 1;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px 10px;
+            margin: 0 4px;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        /* Attendance Button */
+        .attendance-button {
+            background-color: white;
+            color: var(--secondary-color);
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin-top: 22px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        
+        .attendance-button:active {
+            transform: scale(0.98);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .attendance-button-icon {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+        
+        /* Tab Navigation */
+        .tabs-container {
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .tabs-menu {
+            display: flex;
+            padding: 16px 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tab-option {
+            padding: 12px 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .tab-option.active {
+            color: var(--secondary-color);
+            border-bottom-color: var(--secondary-color);
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            padding: 20px 16px;
+        }
+        
+        /* Section Headers */
+        .section-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 20px 0 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* Course Info Card */
+        .info-card {
+            background-color: var(--card-color);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .info-label {
+            width: 120px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            padding-right: 12px;
+        }
+        
+        .info-value {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* Announcement Card */
+        .announcement-card {
+            background-color: var(--card-color);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .announcement-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .announcement-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            margin-right: 12px;
+        }
+        
+        .announcement-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .announcement-date {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        
+        .announcement-content {
+            font-size: 16px;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        
+        .announcement-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .announcement-button {
+            padding: 6px 12px;
+            background-color: var(--background-color);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--secondary-color);
+            cursor: pointer;
+        }
+        
+        /* Module Card */
+        .module-card {
+            background-color: var(--card-color);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+        
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .module-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .module-index {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        
+        .module-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .module-status {
+            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background-color: rgba(88, 86, 214, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .module-status.completed {
+            background-color: rgba(52, 199, 89, 0.1);
+            color: var(--success-color);
+        }
+        
+        .module-progress {
+            height: 6px;
+            background-color: var(--background-color);
+            border-radius: 3px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .module-progress-fill {
+            height: 100%;
+            background-color: var(--secondary-color);
+        }
+        
+        .module-details {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Student List */
+        .student-list {
+            margin-top: 16px;
+        }
+        
+        .student-card {
+            background-color: var(--card-color);
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .student-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background-color: var(--border-color);
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        
+        .student-info {
+            flex: 1;
+        }
+        
+        .student-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .student-email {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .student-messaging {
+            color: var(--secondary-color);
+            font-size: 20px;
+        }
+        
+        /* Attendance Tab */
+        .attendance-status {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .attendance-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 40px;
+            background-color: var(--success-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            margin: 0 auto 16px;
+        }
+        
+        .attendance-message {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .attendance-details {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .attendance-list {
+            margin-top: 20px;
+        }
+        
+        .attendance-item {
+            background-color: var(--card-color);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .attendance-date {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .attendance-time {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        
+        .attendance-checkbox {
+            width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            background-color: var(--success-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .attendance-absent {
+            background-color: var(--danger-color);
+        }
+        
+        /* Location Indicator */
+        .location-data {
+            background-color: var(--background-color);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .location-coord {
+            font-family: 'SF Mono', monospace;
+            font-size: 13px;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 36px;
+            font-size: 17px;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        
+        .toast.visible {
+            opacity: 1;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-container {
+            width: 90%;
+            max-width: 340px;
+            background-color: var(--card-color);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+        
+        .modal-overlay.visible .modal-container {
+            transform: scale(1);
+        }
+        
+        .modal-header {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .modal-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        
+        .modal-content {
+            padding: 0 20px 20px;
+        }
+        
+        .modal-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+            background-color: var(--success-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            margin: 0 auto 20px;
+        }
+        
+        .modal-message {
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .location-card {
+            background-color: var(--background-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        
+        .location-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .location-row {
+            display: flex;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .location-label {
+            color: var(--text-secondary);
+            width: 80px;
+        }
+        
+        .location-value {
+            font-family: monospace;
+            font-weight: 500;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        
+        .modal-button {
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 12px;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <!-- Dynamic Island -->
+        <div class="dynamic-island"></div>
+        
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="time">9:41</div>
+            <div class="status-icons">
+                <div class="status-icon"></div>
+                <div class="status-icon"></div>
+                <div class="status-icon"></div>
+            </div>
+        </div>
+        
+        <!-- Toast for notifications -->
+        <div id="toast" class="toast"></div>
+        
+        <!-- Course Header -->
+        <div class="course-header">
+            <div class="course-back" onclick="showToast('Volviendo a Cursos')">‹</div>
+            <div class="course-menu" onclick="showToast('Opciones del curso')">⋮</div>
+            
+            <div class="course-title">Ingeniería de Software</div>
+            <div class="course-subtitle">
+                <span>Ing. García</span>
+                <span class="course-dot"></span>
+                <span>Código: IS-2025</span>
+            </div>
+            
+            <div class="course-progress" style="height: 6px; background-color: rgba(255, 255, 255, 0.2); border-radius: 3px; margin-bottom: 8px;">
+                <div style="height: 100%; width: 65%; background-color: white; border-radius: 3px;"></div>
+            </div>
+            <div style="font-size: 14px; text-align: right;">65% completado</div>
+            
+            <div class="course-stats">
+                <div class="course-stat">
+                    <div class="stat-value">88</div>
+                    <div class="stat-label">Calificación</div>
+                </div>
+                <div class="course-stat">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Créditos</div>
+                </div>
+                <div class="course-stat">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Asistencia</div>
+                </div>
+            </div>
+            
+            <!-- Attendance Registration Button -->
+            <div class="attendance-button" onclick="registerAttendance()">
+                <span class="attendance-button-icon">📍</span>
+                <span>Registrar Asistencia</span>
+            </div>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="tabs-container">
+            <div class="tabs-menu">
+                <div class="tab-option active" onclick="changeTab('info')">Información</div>
+                <div class="tab-option" onclick="changeTab('content')">Contenido</div>
+                <div class="tab-option" onclick="changeTab('attendance')">Asistencia</div>
+                <div class="tab-option" onclick="changeTab('students')">Estudiantes</div>
+            </div>
+        </div>
+        
+        <!-- Tab Content: Info -->
+        <div class="tab-content active" id="info-tab">
+            <div class="section-header">Detalles del Curso</div>
+            
+            <div class="info-card">
+                <div class="info-row">
+                    <div class="info-label">Catedratico</div>
+                    <div class="info-value">Ing. García</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Horario</div>
+                    <div class="info-value">Sabádo 14-16</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Aula</div>
+                    <div class="info-value">Aula 204</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Créditos</div>
+                    <div class="info-value">5 créditos</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Periodo</div>
+                    <div class="info-value">Primer semestre 2025</div>
+                </div>
+            </div>
+            
+            <div class="section-header">Descripción</div>
+            
+            <div class="info-card">
+                <p style="line-height: 1.5; margin-bottom: 12px;">Este curso proporciona una introducción al campo de la ingeniería de software. Se estudian las diferentes metodologías de desarrollo, herramientas y técnicas utilizadas en el diseño, implementación y prueba de software.</p>
+                
+                <p style="line-height: 1.5;">Los estudiantes aplicarán los conceptos aprendidos en un proyecto práctico a lo largo del semestre, trabajando en equipos para desarrollar una aplicación funcional.</p>
+            </div>
+            
+            <div class="section-header">Anuncios Recientes</div>
+            
+            <div class="announcement-card">
+                <div class="announcement-header">
+                    <div class="announcement-icon">📢</div>
+                    <div>
+                        <div class="announcement-title">Entrega de Proyecto Final</div>
+                        <div class="announcement-date">Hoy, 08:45</div>
+                    </div>
+                </div>
+                
+                <div class="announcement-content">
+                    La entrega del proyecto final se realizará el 15 de octubre. Recuerden que deben incluir la documentación completa según las pautas proporcionadas en clase y publicadas en el sitio del curso.
+                </div>
+                
+                <div class="announcement-footer">
+                    <div class="announcement-button" onclick="showToast('Ver detalles del anuncio')">Ver detalles</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tab Content: Content -->
+        <div class="tab-content" id="content-tab">
+            <div class="section-header">Módulos del Curso</div>
+            
+            <div class="module-card" onclick="showToast('Módulo 1 seleccionado')">
+                <div class="module-header">
+                    <div class="module-left">
+                        <div class="module-index">1</div>
+                        <div class="module-title">Introducción a la Ingeniería de Software</div>
+                    </div>
+                    <div class="module-status completed">Completado</div>
+                </div>
+                
+                <div class="module-progress">
+                    <div class="module-progress-fill" style="width: 100%;"></div>
+                </div>
+                
+                <div class="module-details">
+                    <div>4 lecciones • 2 tareas</div>
+                    <div>3 horas</div>
+                </div>
+            </div>
+            
+            <div class="module-card" onclick="showToast('Módulo 2 seleccionado')">
+                <div class="module-header">
+                    <div class="module-left">
+                        <div class="module-index">2</div>
+                        <div class="module-title">Metodologías de Desarrollo</div>
+                    </div>
+                    <div class="module-status completed">Completado</div>
+                </div>
+                
+                <div class="module-progress">
+                    <div class="module-progress-fill" style="width: 100%;"></div>
+                </div>
+                
+                <div class="module-details">
+                    <div>5 lecciones • 3 tareas</div>
+                    <div>4 horas</div>
+                </div>
+            </div>
+            
+            <div class="module-card" onclick="showToast('Módulo 3 seleccionado')">
+                <div class="module-header">
+                    <div class="module-left">
+                        <div class="module-index">3</div>
+                        <div class="module-title">Análisis de Requisitos</div>
+                    </div>
+                    <div class="module-status completed">Completado</div>
+                </div>
+                
+                <div class="module-progress">
+                    <div class="module-progress-fill" style="width: 100%;"></div>
+                </div>
+                
+                <div class="module-details">
+                    <div>4 lecciones • 2 tareas</div>
+                    <div>3 horas</div>
+                </div>
+            </div>
+            
+            <div class="module-card" onclick="showToast('Módulo 4 seleccionado')">
+                <div class="module-header">
+                    <div class="module-left">
+                        <div class="module-index">4</div>
+                        <div class="module-title">Diseño de Software</div>
+                    </div>
+                    <div class="module-status">En progreso</div>
+                </div>
+                
+                <div class="module-progress">
+                    <div class="module-progress-fill" style="width: 60%;"></div>
+                </div>
+                
+                <div class="module-details">
+                    <div>6 lecciones • 3 tareas</div>
+                    <div>5 horas</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tab Content: Attendance -->
+        <div class="tab-content" id="attendance-tab">
+            <div class="attendance-status">
+                <div class="attendance-icon">✓</div>
+                <div class="attendance-message">Asistencia registrada hoy</div>
+                <div class="attendance-details">Martes, 10 de octubre 2024 • 10:15 AM</div>
+                
+                <div class="location-data">
+                    <div style="margin-bottom: 4px;">Ubicación registrada:</div>
+                    <div class="location
