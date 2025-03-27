@@ -1,3 +1,9 @@
 {
+<<<<<<< HEAD
     "CodeGPT.apiKey": "CodeGPT Plus Beta"
+=======
+    "files.readonlyInclude": {
+        "{**/.c4z/.extsrcs/*.PROTSYM.cbl,**/.c4z/.extsrcs/*.PROTSYM.listing}": true
+    }
+>>>>>>> 716147662f2f810fb5d13bcbd70a1dd829c5fe89
 }
