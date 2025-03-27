@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de control de asistencia UMG - Registro</title>
+    <title>Sistema de control de asistencia UMG - Sedes/Centros </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -142,8 +142,10 @@
         
         .btn:hover {
             background-color: #0069d9;
-        }
         
+        }
+
+             
         .form-footer {
             text-align: center;
             margin-top: 15px;
@@ -281,58 +283,77 @@
         </div>
         
         <div class="form-container">
-            <h2 class="form-title">Registro de nuevo usuario</h2>
+            <h2 class="form-title">Registro de nuevas sedes y centros</h2>
             
-            <form id="registrationForm" action="registro.html" method="POST">
+            <form id="registrationForm" action="sedes.html" method="POST">
+               
+                <div class="form-group">
+                    <label for="id_sede_centro">Sede / Centro</label>
+                    <i class="fas fa-building icon"></i>
+                    <select id="id_sede_centro" name="id_sede_centro" class="form-control" required>
+                        <option value="">Seleccione una sede o centro</option>
+                        <option value="1">Campus Central</option>
+                        <option value="2">Antigua Guatemala</option>
+                        <option value="3">Huehuetenango</option>
+                        <option value="4">Jutiapa</option>
+                        <option value="5">Quetzaltenango</option>
+                        <option value="6">Villa Nueva</option>
+                        <option value="7">Amatitlan</option>
+                        <option value="8">Boca del Monte</option>
+                        <option value="9">Chinautla</option>
+                        <option value="10">La Florida, Zona 19</option>
+                        <option value="11">El Naranjo, Mixco</option>
+                        <option value="12">Portales, Zona 17</option>
+                        <option value="13">San José Pinula</option>
+                        <option value="14">Santa Rosita, Zona 16</option>
+                        <option value="15">San Juan Sacatepéquez</option>
+                        <option value="16">Cobán</option>
+                        <option value="17">Salamá</option>
+                        <option value="18">Chiquimula</option>
+                        <option value="19">Guatatoya</option>
+                        <option value="20">Morales</option>
+                        <option value="21">Puerto Barrios</option>
+                        <option value="22">Sanarate</option>
+                        <option value="23">Zacapa</option>
+                        <option value="24">Chiquimulilla</option>
+                        <option value="25">Cuilapa</option>
+                        <option value="26">Jalapa</option>
+                        <option value="27">Jalpatagua</option>
+                        <option value="28">Nueva Santa Rosa</option>
+                        <option value="29">Santa Catarina Mita</option>
+                        <option value="30">Chimaltenango</option>
+                        <option value="31">Escuintla</option>
+                        <option value="32">Nueva Concepción, Escuintla</option>
+                        <option value="33">Santa Lucia Cotzumalguapa</option>
+                        <option value="34">Coatepeque</option>
+                        <option value="35">Malacatán</option>
+                        <option value="36">Mazatenango</option>
+                        <option value="37">Retalhuleu</option>
+                        <option value="38">San Pedro Sacatepéquez</option>
+                        <option value="39">Sololá</option>
+                        <option value="40">Totonicapán</option>
+                        <option value="41">Jacaltenango</option>
+                        <option value="42">Quiché</option>
+                        <option value="43">Santa Elena, Flores</option>
+                        </select>
+                    <div class="error-message" id="id_sede_centro_error"></div>
+                </div>
+                              
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="primer_nombre">Primer nombre</label>
+                            <label for="direccion">Direccion</label>
                             <i class="fas fa-user icon"></i>
-                            <input type="text" id="primer_nombre" name="primer_nombre" class="form-control" required>
-                            <div class="error-message" id="primer_nombre_error"></div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="segundo_nombre">Segundo nombre</label>
-                            <i class="fas fa-user icon"></i>
-                            <input type="text" id="segundo_nombre" name="segundo_nombre" class="form-control">
-                            <div class="error-message" id="segundo_nombre_error"></div>
+                            <input type="text" id="direccion" name="direccion" class="form-control" required>
+                            <div class="error-message" id="direccion_error"></div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="primer_apellido">Primer apellido</label>
-                            <i class="fas fa-user icon"></i>
-                            <input type="text" id="primer_apellido" name="primer_apellido" class="form-control" required>
-                            <div class="error-message" id="primer_apellido_error"></div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="segundo_apellido">Segundo apellido</label>
-                            <i class="fas fa-user icon"></i>
-                            <input type="text" id="segundo_apellido" name="segundo_apellido" class="form-control">
-                            <div class="error-message" id="segundo_apellido_error"></div>
-                        </div>
-                    </div>
-                </div>
-                
+                                
                 <div class="form-group">
-                    <label for="fecha_nacimiento">Fecha de nacimiento</label>
-                    <i class="fas fa-calendar-alt icon"></i>
-                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" required>
-                    <div class="error-message" id="fecha_nacimiento_error"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="correo_electronico">Correo electrónico</label>
+                    <label for="CorreoElectronico">Correo electrónico</label>
                     <i class="fas fa-envelope icon"></i>
-                    <input type="email" id="correo_electronico" name="correo_electronico" class="form-control" required>
+                    <input type="email" id="CorreoElectronico" name="CorreoElectronico" class="form-control" required>
                     <div class="error-message" id="correo_electronico_error"></div>
                 </div>
                 
@@ -342,84 +363,31 @@
                     <input type="tel" id="telefono" name="telefono" class="form-control" required>
                     <div class="error-message" id="telefono_error"></div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="tipo">Tipo de usuario</label>
-                    <i class="fas fa-users-cog icon"></i>
-                    <select id="tipo" name="tipo" class="form-control" required>
-                        <option value="">Seleccione un tipo</option>
-                        <option value="1">Estudiante</option>
-                        <option value="2">Profesor</option>
-                        <option value="3">Administrativo</option>
-                    </select>
-                    <div class="error-message" id="tipo_error"></div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <button type="submit" class="btn">Limpiar</button> <!-- margin-end: 1rem -->
+                            <br>
+                            <br>
+                            <button type="submit" class="btn">Actualizar</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <button type="submit" class="btn">Insertar</button>
+                            <br>
+                            <br>
+                            <button type="submit" class="btn">Eliminar</button>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="id_sede_centro">Sede / Centro</label>
-                    <i class="fas fa-building icon"></i>
-                    <select id="id_sede_centro" name="id_sede_centro" class="form-control" required>
-                        <option value="">Seleccione una sede</option>
-                        <option value="1">Campus Central</option>
-                        <option value="2">Campus Escuintla</option>
-                        <option value="3">Campus Retalhuleu</option>
-                        <option value="4">Campus Quetzaltenango</option>
-                    </select>
-                    <div class="error-message" id="id_sede_centro_error"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="contraseña">Contraseña</label>
-                    <i class="fas fa-lock icon"></i>
-                    <input type="password" id="contraseña" name="contraseña" class="form-control" required>
-                    <i class="fas fa-eye password-toggle" id="passwordToggle"></i>
-                    <div class="error-message" id="contraseña_error"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="confirmar_contraseña">Confirmar contraseña</label>
-                    <i class="fas fa-lock icon"></i>
-                    <input type="password" id="confirmar_contraseña" name="confirmar_contraseña" class="form-control" required>
-                    <i class="fas fa-eye password-toggle" id="confirmPasswordToggle"></i>
-                    <div class="error-message" id="confirmar_contraseña_error"></div>
-                </div>
-                
-                <button type="submit" class="btn">Registrarse</button>
-                
-                <div class="form-footer">
-                    ¿Ya tienes una cuenta? <a href="login.html">Iniciar sesión</a>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Password visibility toggle
-            const passwordToggle = document.getElementById('passwordToggle');
-            const confirmPasswordToggle = document.getElementById('confirmPasswordToggle');
-            const passwordField = document.getElementById('contraseña');
-            const confirmPasswordField = document.getElementById('confirmar_contraseña');
-            
-            passwordToggle.addEventListener('click', function() {
-                togglePasswordVisibility(passwordField, passwordToggle);
-            });
-            
-            confirmPasswordToggle.addEventListener('click', function() {
-                togglePasswordVisibility(confirmPasswordField, confirmPasswordToggle);
-            });
-            
-            function togglePasswordVisibility(field, icon) {
-                if (field.type === 'password') {
-                    field.type = 'text';
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                } else {
-                    field.type = 'password';
-                    icon.classList.remove('fa-eye-slash');
-                    icon.classList.add('fa-eye');
-                }
-            }
+        
             
             // Form validation
             const form = document.getElementById('registrationForm');
@@ -434,22 +402,9 @@
                     element.textContent = '';
                 });
                 
-                // Validate first name
-                const primerNombre = document.getElementById('primer_nombre');
-                if (primerNombre.value.trim() === '') {
-                    showError('primer_nombre_error', 'El primer nombre es obligatorio');
-                    isValid = false;
-                }
-                
-                // Validate first lastname
-                const primerApellido = document.getElementById('primer_apellido');
-                if (primerApellido.value.trim() === '') {
-                    showError('primer_apellido_error', 'El primer apellido es obligatorio');
-                    isValid = false;
-                }
-                
+            
                 // Validate email
-                const email = document.getElementById('correo_electronico');
+                const email = document.getElementById('CorreoElectronico');
                 if (email.value.trim() === '') {
                     showError('correo_electronico_error', 'El correo electrónico es obligatorio');
                     isValid = false;
@@ -468,44 +423,13 @@
                     isValid = false;
                 }
                 
-                // Validate user type
-                const tipo = document.getElementById('tipo');
-                if (tipo.value === '') {
-                    showError('tipo_error', 'Seleccione un tipo de usuario');
-                    isValid = false;
-                }
-                
-                // Validate campus
+               // Validate campus
                 const idSedeCentro = document.getElementById('id_sede_centro');
                 if (idSedeCentro.value === '') {
                     showError('id_sede_centro_error', 'Seleccione una sede');
                     isValid = false;
                 }
-                
-                // Validate password
-                const password = document.getElementById('contraseña');
-                if (password.value === '') {
-                    showError('contraseña_error', 'La contraseña es obligatoria');
-                    isValid = false;
-                } else if (password.value.length < 8) {
-                    showError('contraseña_error', 'La contraseña debe tener al menos 8 caracteres');
-                    isValid = false;
-                }
-                
-                // Validate password confirmation
-                const confirmPassword = document.getElementById('confirmar_contraseña');
-                if (confirmPassword.value === '') {
-                    showError('confirmar_contraseña_error', 'Confirme su contraseña');
-                    isValid = false;
-                } else if (confirmPassword.value !== password.value) {
-                    showError('confirmar_contraseña_error', 'Las contraseñas no coinciden');
-                    isValid = false;
-                }
-                
-                if (!isValid) {
-                    event.preventDefault();
-                }
-            });
+                      
             
             function showError(id, message) {
                 const errorElement = document.getElementById(id);

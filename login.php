@@ -6,7 +6,7 @@ session_start();
 $host = "localhost";
 $dbname = "umg_asistencia";
 $user = "postgres";
-$password = "yourpassword"; // Change this to your actual PostgreSQL password
+$password = "Hortencia*1990"; // Change this to your actual PostgreSQL password
 
 // Establish connection to PostgreSQL
 try {
@@ -427,7 +427,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <button type="submit" class="btn">Iniciar Sesión</button>
                 
                 <div class="form-footer">
-                    ¿No tienes una cuenta? <a href="registro.html">Registrarse</a>
+                    ¿No tienes una cuenta? <a href="persona.html">Registrarse</a>
                 </div>
             </form>
         </div>
